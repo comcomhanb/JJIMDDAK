@@ -44,7 +44,7 @@ self.handleReady = function()
     // register swipe to reveal for all new list items
     $("#listview").find(".item-marker").each(function(index)
     {
-        var item = $(self);
+        var item = $(this);
         var id = item.prop("id");
         var startOffcanvas = item.find(".oj-offcanvas-start").first();
         var endOffcanvas = item.find(".oj-offcanvas-end").first();
@@ -67,8 +67,8 @@ self.handleDestroy = function()
     // register swipe to reveal for all new list items
     $("#listview").find(".item-marker").each(function(index)
     {
-        var startOffcanvas = $(self).find(".oj-offcanvas-start").first();
-        var endOffcanvas = $(self).find(".oj-offcanvas-end").first();
+        var startOffcanvas = $(this).find(".oj-offcanvas-start").first();
+        var endOffcanvas = $(this).find(".oj-offcanvas-end").first();
 
         oj.SwipeToRevealUtils.tearDownSwipeActions(startOffcanvas);
         oj.SwipeToRevealUtils.tearDownSwipeActions(endOffcanvas);
