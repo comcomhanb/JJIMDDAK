@@ -26,45 +26,66 @@ function(oj, ko, $) {
         return true;
     }
     var table1_1 =[];
+    var table1_2 =[];
+
+    var table2_1 =[];
+    var table2_2 =[];
+
+    var table3_1 =[];
+    var table3_2 =[];
+    var table3_3 =[];
+
+    var table4_1 =[];
+    var table4_2 =[];
+    var table4_3 =[];
+
+    var table5_1 =[];
+    var table5_2 =[];
 
     for ( var index=0; index<8; index++ ) {
       table1_1.push( {name: 'table1_1-'+index , color: '#267db3'} );
-
-    }
-    var table1_2 =[];
-
-    for ( var index=0; index<8; index++ ) {
       table1_2.push( {name: 'table1_2-'+index, color: '#267db3'} );
-
-    }
-    var table2_1 =[];
-
-    for ( var index=0; index<8; index++ ) {
       table2_1.push( {name: 'table2_1-'+index, color: '#267db3'} );
-
-    }
-
-    var table2_2 =[];
-
-    for ( var index=0; index<8; index++ ) {
       table2_2.push( {name: 'table2_2-'+index, color: '#267db3' });
+      table3_1.push( {name: 'table3_1-'+index, color: '#267db3' });
+      table3_2.push( {name: 'table3_2-'+index, color: '#267db3' });
+
 
     }
-
-    var table3_3 =[];
-
-    for ( var index=0; index<3; index++ ) {
+    for ( var index=0; index<4; index++ ) {
       table3_3.push( {name: 'table3_3-'+index, color: '#267db3'} );
+      table5_2.push( {name: 'table3_3-'+index, color: '#267db3'} );
 
+    }
+    for ( var index=0; index<6; index++ ) {
+      table4_1.push( {name: 'table4_1-'+index, color: '#267db3' });
+      table4_2.push( {name: 'table4_2-'+index, color: '#267db3' });
+
+    }
+    for ( var index=0; index<2; index++ ) {
+      table4_3.push( {name: 'table4_3-'+index, color: '#267db3'} );
+
+    }
+    for ( var index=0; index<3; index++ ) {
+      table5_1.push( {name: 'table5_1-'+index, color: '#267db3' });
     }
 
     self.pictoChartItems1_1 = ko.observableArray(table1_1);
     self.pictoChartItems1_2 = ko.observableArray(table1_2);
+
     self.pictoChartItems2_1 = ko.observableArray(table2_1);
     self.pictoChartItems2_2 = ko.observableArray(table2_2);
+
+    self.pictoChartItems3_1 = ko.observableArray(table3_1);
+    self.pictoChartItems3_2 = ko.observableArray(table3_2);
     self.pictoChartItems3_3 = ko.observableArray(table3_3);
 
+    self.pictoChartItems4_1 = ko.observableArray(table4_1);
+    self.pictoChartItems4_2 = ko.observableArray(table4_2);
+    self.pictoChartItems4_3 = ko.observableArray(table4_3);
 
+    self.pictoChartItems5_1 = ko.observableArray(table5_1);
+    self.pictoChartItems5_2 = ko.observableArray(table5_2);
 
     var selected = ['iPad'];
     self.selectedItemsValue(selected);

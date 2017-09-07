@@ -36,39 +36,20 @@
               </div>
 
                <div tabIndex="-1" data-bind="attr: {id: 'first_toolbar_'+id}" class="oj-offcanvas-start" style="width:75px">
-                   <div data-bind="click: $parent.handleRead">
-                       <div class="oj-flex-bar" style="height:100%">
-                           <div class="oj-flex-bar-center-absolute">
-                               <div class="oj-flex oj-sm-flex-direction-column">
-                                   <div title=".demo-library-icon-24" role="img" class="oj-flex-item demo-library-icon-24 demo-icon-font-24"></div>
-                                   <div style="padding-top: 10px" class="oj-flex-item">Read</div>
-                               </div>
-                           </div>
-                       </div>
-                   </div>
+                 <div data-bind="click: $parent.handleMore" class="oj-swipetoreveal-more">
+                     <div class="oj-flex-bar" style="height:100%">
+                         <div class="oj-flex-bar-center-absolute">
+                             <div class="oj-flex oj-sm-flex-direction-column">
+                                 <div title=".demo-library-icon-24" role="img" class="oj-flex-item demo-library-icon-24 demo-icon-font-24"></div>
+                                 <div style="padding-top: 10px" class="oj-flex-item">More</div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
                </div>
 
                <div tabIndex="-1" data-bind="attr: {id: 'second_toolbar_'+id}" class="oj-offcanvas-end" style="width:225px">
-                   <div data-bind="click: $parent.handleMore" class="oj-swipetoreveal-more">
-                       <div class="oj-flex-bar" style="height:100%">
-                           <div class="oj-flex-bar-center-absolute">
-                               <div class="oj-flex oj-sm-flex-direction-column">
-                                   <div title=".demo-library-icon-24" role="img" class="oj-flex-item demo-library-icon-24 demo-icon-font-24"></div>
-                                   <div style="padding-top: 10px" class="oj-flex-item">More</div>
-                               </div>
-                           </div>
-                       </div>
-                   </div>
-                   <div data-bind="click: $parent.handleFlag" class="oj-swipetoreveal-flag">
-                       <div class="oj-flex-bar" style="height:100%">
-                           <div class="oj-flex-bar-center-absolute">
-                               <div class="oj-flex oj-sm-flex-direction-column">
-                                   <div title=".demo-library-icon-24" role="img" class="oj-flex-item demo-library-icon-24 demo-icon-font-24"></div>
-                                   <div style="padding-top: 10px" class="oj-flex-item">Flag</div>
-                               </div>
-                           </div>
-                       </div>
-                   </div>
+
                    <div data-bind="click: $parent.handleTrash" class="oj-swipetoreveal-alert oj-swipetoreveal-default">
                        <div class="oj-flex-bar" style="height:100%">
                            <div class="oj-flex-bar-center-absolute">
