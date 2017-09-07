@@ -39,6 +39,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojknockout', 'ojs/ojarray
       ];
       self.navDataSource = new oj.ArrayTableDataSource(navData, {idAttribute: 'id'});
       //
+
       // Header
       // Application Name used in Branding Area
       self.appName = ko.observable("찜!딱!");

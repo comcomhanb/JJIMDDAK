@@ -1,52 +1,219 @@
 <!--
- Copyright (c) 2014, 2017, Oracle and/or its affiliates.
- The Universal Permissive License (UPL), Version 1.0
- -->
+   Copyright (c) 2014, 2017, Oracle and/or its affiliates.
+   The Universal Permissive License (UPL), Version 1.0
+   -->
 <div class="oj-hybrid-padding">
-  <h3>안녕하세요 전성혜님,</h3>
+<h3>안녕하세요 전성혜님,</h3>
+<span data-bind="text: value"></span>
+<label>의 "딱!"앉으실 자리를 보여드릴께요</label>
+<br/>
+<input id="date" data-bind="ojComponent: {component: 'ojInputDate',value: value},"/>
+<input id="inputButton" type="button"
+       data-bind="click: buttonClick,
+                  ojComponent: {component: 'ojButton', label: '예약 하기'}"/>
 
-  <span data-bind="text: value"></span>
-  <label>의 "딱!"앉으실 자리를 보여드릴께요</label>
-<br/>      <br/>
-
-  <div id="div1">
-
-
-
-  </div>
-  <div id='chart-container'>
-  <div style="display:inline-block; max-width:350px;width:100%;">
-
-  </div>
-  <div>
-    <div style="display:inline-block; padding-right: 1%;max-width:300px;width:90%;">
-      <div id='pictochart1' data-bind="ojComponent:{
-            component: 'ojPictoChart',
-            items: pictoChartItems,
-            selectionMode: selectionValue,
-            selection: selectedItemsValue,
-            drilling: drillingValue,
-            animationOnDataChange: 'auto',
-            columnWidth: 48, rowHeight: 48,
-            optionChange: picto1Listener,
-            drill: picto1DrillListener
-          }"
-          style="width:100%;">
+<div id='chart-container'>
+   <br/>
+   <div class="oj-flex-item stat1" style="background-color:#ececec;border-radius:3px;font-weight:bold;text-align: center;max-width:270px">캔틴 </div>
+   <div>
+      <div class="oj-flex oj-sm-flex-items-initial oj-flex-items-pad">
+         <div style="display:inline-block; padding-right: 1%;max-width:140px;width:70%;">
+            <div id='pictochart1' data-bind="ojComponent:{
+               component: 'ojPictoChart',
+               items: pictoChartItems1_1,
+               selectionMode: selectionValue,
+               selection: selectedItemsValue,
+               animationOnDataChange: 'auto',
+               columnWidth: 30, rowHeight: 30,
+               optionChange: picto1Listener
+               }"
+               style="width:100%;">
+            </div>
+         </div>
+         <div style="display:inline-block; padding-right: 1%;max-width:140px;width:70%;">
+            <div id='pictochart1' data-bind="ojComponent:{
+               component: 'ojPictoChart',
+               items: pictoChartItems1_2,
+               selectionMode: selectionValue,
+               selection: selectedItemsValue,
+               animationOnDataChange: 'auto',
+               columnWidth: 30, rowHeight: 30,
+               optionChange: picto1Listener
+               }"
+               style="width:100%;"></div>
+         </div>
+         <div data-bind="ojComponent: {
+            component: 'ojLegend',
+            orientation: 'vertical',
+            sections: legendSections
+            }"
+            style="max-width:70px;width:100%; height:60px;" id="legend1"></div>
       </div>
-      <div style="height:65px;">
-        <div style="height:inherit; max-width:120px;display: inline-block;">
-          <label id="currentText" style="float:left;color:#737373;font-weight:bolder;"></label>
-          <label id="currentText2" style="padding-left:8px;float:left;color:#737373;font-weight:bold;"></label>
-        </div>
-        <div style="height:inherit; max-width:120px;display: inline-block;">
-          <label id="currentText3" style="float:left;color:#737373;font-weight:bolder;"></label>
-          <label id="currentText4" style="padding-left:8px;float:left;color:#737373;font-weight:bold;"></label>
-        </div>
+      <br/>
+      <div>
+         <div class="oj-flex oj-sm-flex-items-initial oj-flex-items-pad">
+            <div style="display:inline-block; padding-right: 1%;max-width:140px;width:70%;">
+               <div id='pictochart1' data-bind="ojComponent:{
+                  component: 'ojPictoChart',
+                  items: pictoChartItems2_1,
+                  selectionMode: selectionValue,
+                  selection: selectedItemsValue,
+                  animationOnDataChange: 'auto',
+                  columnWidth: 30, rowHeight: 30,
+                  optionChange: picto1Listener
+                  }"
+                  style="width:100%;">
+               </div>
+            </div>
+            <div style="display:inline-block; padding-right: 1%;max-width:140px;width:70%;">
+               <div id='pictochart1' data-bind="ojComponent:{
+                  component: 'ojPictoChart',
+                  items: pictoChartItems2_2,
+                  selectionMode: selectionValue,
+                  selection: selectedItemsValue,
+                  animationOnDataChange: 'auto',
+                  columnWidth: 30, rowHeight: 30,
+                  optionChange: picto1Listener
+                  }"
+                  style="width:100%;"></div>
+            </div>
+         </div>
       </div>
-    </div>
-    <label for="date">다른 날짜를 조회하시려면 선택 해 주세요.</label>
-    <input id="date" data-bind="ojComponent: {component: 'ojInputDate',
-                                                value: value}"/>
-  </div>
+      <br/>
+      <div>
+         <div class="oj-flex oj-sm-flex-items-initial oj-flex-items-pad">
+            <div style="display:inline-block; padding-right: 1%;max-width:140px;width:70%;">
+               <div id='pictochart1' data-bind="ojComponent:{
+                  component: 'ojPictoChart',
+                  items: pictoChartItems1_1,
+                  selection: selectedItemsValue,
+                  animationOnDataChange: 'auto',
+                  columnWidth: 30, rowHeight: 30,
+                  optionChange: picto1Listener
+                  }"
+                  style="width:100%;">
+               </div>
+            </div>
+            <div style="display:inline-block; padding-right: 1%;max-width:140px;width:70%;">
+               <div id='pictochart1' data-bind="ojComponent:{
+                  component: 'ojPictoChart',
+                  items: pictoChartItems1_1,
+                  selectionMode: selectionValue,
+                  selection: selectedItemsValue,
+                  animationOnDataChange: 'auto',
+                  columnWidth: 30, rowHeight: 30,
+                  optionChange: picto1Listener
+                  }"
+                  style="width:100%;"></div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <br/>
+   <div>
+      <div class="oj-flex oj-sm-flex-items-initial oj-flex-items-pad">
+         <div style="display:inline-block; padding-right: 1%;max-width:140px;width:70%;">
+            <div id='pictochart1' data-bind="ojComponent:{
+               component: 'ojPictoChart',
+               items: pictoChartItems1_1,
+               selectionMode: selectionValue,
+               selection: selectedItemsValue,
+               animationOnDataChange: 'auto',
+               columnWidth: 30, rowHeight: 30,
+               optionChange: picto1Listener
+               }"
+               style="width:100%;">
+            </div>
+         </div>
+         <div style="display:inline-block; padding-right: 1%;max-width:140px;width:70%;">
+            <div id='pictochart1' data-bind="ojComponent:{
+               component: 'ojPictoChart',
+               items: pictoChartItems1_1,
+               selectionMode: selectionValue,
+               selection: selectedItemsValue,
+               animationOnDataChange: 'auto',
+               columnWidth: 30, rowHeight: 30,
+               optionChange: picto1Listener
+               }"
+               style="width:100%;"></div>
+         </div>
+         <div style="display:inline-block; padding-right: 1%;max-width:70px;width:70%;">
+            <div id='pictochart1' data-bind="ojComponent:{
+               component: 'ojPictoChart',
+               items: pictoChartItems3_3,
+               selectionMode: selectionValue,
+               selection: selectedItemsValue,
+               animationOnDataChange: 'auto',
+               columnWidth: 30, rowHeight: 30,
+               optionChange: picto1Listener
+               }"
+               style="width:100%;">
+            </div>
+         </div>
+      </div>
+   </div>
+   <br/>
+   <div>
+      <div class="oj-flex oj-sm-flex-items-initial oj-flex-items-pad">
+         <div style="display:inline-block; padding-right: 1%;max-width:140px;width:70%;">
+            <div id='pictochart1' data-bind="ojComponent:{
+               component: 'ojPictoChart',
+               items: pictoChartItems1_1,
+               selectionMode: selectionValue,
+               selection: selectedItemsValue,
+               animationOnDataChange: 'auto',
+               columnWidth: 30, rowHeight: 30,
+               optionChange: picto1Listener
+               }"
+               style="width:100%;">
+            </div>
+            <div class="oj-flex-item stat1" style="background-color:#ececec;padding-left: 1%;border-radius:3px;font-weight:bold;text-align: center;max-width:80px">심명종전무님</div>
+
+         </div>
+         <div style="display:inline-block; padding-right: 1%;max-width:140px;width:70%;">
+            <div id='pictochart1' data-bind="ojComponent:{
+               component: 'ojPictoChart',
+               items: pictoChartItems1_1,
+               selectionMode: selectionValue,
+               selection: selectedItemsValue,
+               animationOnDataChange: 'auto',
+               columnWidth: 30, rowHeight: 30,
+               optionChange: picto1Listener
+               }"
+               style="width:100%;"></div>
+               <div class="oj-flex-item stat1" style="background-color:#ececec;padding-left: 1%;border-radius:5px;font-weight:bold;text-align: center;max-width:80px">강우진전무님</div>
+
+         </div>
+
+         <div style="display:inline-block; padding-right: 1%;max-width:70px;width:70%;">
+            <div id='pictochart1' data-bind="ojComponent:{
+               component: 'ojPictoChart',
+               items: pictoChartItems3_3,
+               selectionMode: selectionValue,
+               layoutOrigin: 'bottomStart',
+               selection: selectedItemsValue,
+               animationOnDataChange: 'auto',
+               columnWidth: 30, rowHeight: 30,
+               optionChange: picto1Listener
+               }"
+               style="width:100%;">
+
+            </div>
+            <div class="oj-flex-item stat1" style="background-color:#ececec;border-radius:3px;font-weight:bold;text-align: center;max-width:100px">전무님</div>
+
+         </div>
+
+      </div>
+   </div>
+
 </div>
+<div style="height:45px;">
+   <div style="height:inherit; max-width:120px;display: inline-block;">
+      <label id="currentText" style="float:left;color:#737373;font-weight:bolder;"></label>
+      <label id="currentText2" style="padding-left:8px;float:left;color:#737373;font-weight:bold;"></label>
+   </div>
+   <div style="height:inherit; max-width:120px;display: inline-block;">
+      <label id="currentText3" style="float:left;color:#737373;font-weight:bolder;"></label>
+      <label id="currentText4" style="padding-left:8px;float:left;color:#737373;font-weight:bold;"></label>
+   </div>
 </div>

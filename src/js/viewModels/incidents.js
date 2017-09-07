@@ -26,14 +26,14 @@ define(['ojs/ojcore', 'knockout', 'jquery',
        * the promise is resolved
        */
 
-self.allItems = ko.observableArray([{"id": "email_1", "title": "(L)전asdf폴라, (R)김영규", "from": "좌석번호 : 14230 / 날짜 : 4/10", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam pharetra, risus ac interdum sollicitudin, sem erat ultrices ipsum."},
-                                    {"id": "email_2", "title": "(L)전폴라, (R)n/a", "from": "좌석번호 : 14231", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam pharetra, risus ac interdum sollicitudin, sem erat ultrices ipsum"},
-                                    {"id": "email_3", "title": "(L)n/a, (R)황주필", "from": "좌석번호 : 14214", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam pharetra, risus ac interdum sollicitudin, sem erat ultrices ipsum"},
-                                    {"id": "email_4", "title": "(L)강인호, (R)김영규", "from": "좌석번호 : 14130", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam pharetra, risus ac interdum sollicitudin, sem erat ultrices ipsum"},
-                                    {"id": "email_5", "title": "(L)황주필, (R)강인호", "from": "좌석번호 : 12230", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam pharetra, risus ac interdum sollicitudin, sem erat ultrices ipsum"},
-                                    {"id": "email_6", "title": "Friend looking for internship", "from": "좌석번호 : 14230", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam pharetra, risus ac interdum sollicitudin, sem erat ultrices ipsum"},
-                                    {"id": "email_7", "title": "Re: Feedback from architecture review", "from": "Nina Evans", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam pharetra, risus ac interdum sollicitudin, sem erat ultrices ipsum"},
-                                    {"id": "email_8", "title": "Re: Customer success stories", "from": "Julia Chen", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam pharetra, risus ac interdum sollicitudin, sem erat ultrices ipsum"}
+self.allItems = ko.observableArray([{"id": "email_1", "title": "4월 10일 금요일", "from": "좌석번호 : 14230", "content": "이번주"},
+                                    {"id": "email_2", "title": "4월 14일 수요일", "from": "좌석번호 : 14231", "content": "다음주"},
+                                    {"id": "email_3", "title": "4월 16일 목요일", "from": "좌석번호 : 14214", "content": "다음주"},
+                                    {"id": "email_4", "title": "4월 20일 금요일", "from": "좌석번호 : 14130", "content": "다음주"},
+                                    {"id": "email_5", "title": "4월 36일 화요일", "from": "좌석번호 : 12230", "content": "다다음주"},
+                                    {"id": "email_6", "title": "Friend looking for internship", "from": "좌석번호 : 14230", "content": "이번주"},
+                                    {"id": "email_7", "title": "Re: Feedback from architecture review", "from": "Nina Evans", "content": "이번주"},
+                                    {"id": "email_8", "title": "Re: Customer success stories", "from": "Julia Chen", "content": "이번주"}
                                    ]);
 self.dataSource = new oj.ArrayTableDataSource(self.allItems, {idAttribute: "id"});
 
