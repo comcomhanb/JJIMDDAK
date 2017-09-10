@@ -65,12 +65,14 @@
              }"
               style="clear:both; height:60px;" >
          </div-->
-         <button id="inputButton"class="oj-button-sm"
-                 data-bind="ojComponent: {
-                     component:'ojButton',
-                     icons: {end:'oj-fwk-icon-next oj-fwk-icon'},
-                     label: '예약 생성'
-                 }"></button>
+                 <button id="inputButton"class="oj-button-sm"
+                         data-bind="click: buttonClick,ojComponent: {
+                             component:'ojButton',
+                             icons: {end:'oj-fwk-icon-next oj-fwk-icon'},
+                             label: '예약 생성'
+                         }"></button>
+
+
       </div>
 
       <br/>

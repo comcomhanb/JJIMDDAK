@@ -11,7 +11,7 @@ function(oj, ko, $, app) {
   function DashboardViewModel() {
     var self = this;
     self.app = app;
-    //  self.username = app.username;
+    self.username = self.app.userLogin();
     var baseUrl = "https://msrapi-gse00013250.apaas.us6.oraclecloud.com/v1/";
     //  var reservationUrl = baseUrl+ "reservations/findAvailableSeats?startingTime=2017-09-07T00:01:42&endingTime=2017-09-07T00:01:42";
 
@@ -31,10 +31,12 @@ function(oj, ko, $, app) {
       'Accept' : 'application/json'
     }
     var reservationUrl = baseUrl+ "reservations/findAvailableSeats?startingTime="+ startingTime +"&endingTime=" + endingTime;
+    self.availableSeat = [];
 
 
     //this.username = about.currentValue;
     //calender value
+    self.ui = ko.observable('');
     this.value = ko.observable(oj.IntlConverterUtils.dateToLocalIso(new Date()));
     self.selectionValue = ko.observable('single');
     self.selectedItemsValue = ko.observableArray([]);
@@ -46,7 +48,9 @@ function(oj, ko, $, app) {
     self.clickedButton = ko.observable("(None clicked yet)");
     self.buttonClick = function(data, event){
       self.clickedButton(event.currentTarget.id);
-      console.log("sfd");
+      console.log(self.value());
+      console.log(self.username);
+      console.log(self.ui);
 
       return true;
     }
@@ -140,7 +144,7 @@ function(oj, ko, $, app) {
       {seatNo: "12481", location: "12F South", id: "A-4"},
       {seatNo: "12482", location: "12F South", id: "A-3"},
       {seatNo: "12483", location: "12F South", id: "A-2"},
-      {seatNo: "12484", location: "12F South", id: "A-1"},
+      {seatNo: "12484", location: "12F South", id: "A-1"}
     ]
 
     self.table1_1.size  = self.table1_2.size = self.table2_1.size = self.table2_2.size = self.table3_1.size = self.table3_2.size = 8;
@@ -149,19 +153,6 @@ function(oj, ko, $, app) {
     self.table4_3.size = 2;
     self.table5_1.size = 3;
 
-    $.ajax({
-     type:"GET",
-     headers : headers,
-     url: reservationUrl,
-     data: "",
-     processData: false,
-     success: function(msg) {
-       self.availableSeat = msg;
-         for(var index = 0; index < self.availableSeat.length ; index++){
-            self.availableSeat[index].color= '#267db3';
-          }
-     }
-   });
 
     self.pictoChartItems1_1 = ko.observableArray(self.table1_1);
     self.pictoChartItems1_2 = ko.observableArray(self.table1_2);
@@ -181,6 +172,7 @@ function(oj, ko, $, app) {
     self.pictoChartItems5_2 = ko.observableArray(self.table5_2);
 
     self.picto1Listener = function(event, ui) {
+
       if (ui['option'] == 'selection') {
         $('#currentText').html("선택한 좌석: <br/>");
         var items = "";
@@ -193,76 +185,113 @@ function(oj, ko, $, app) {
           if (ui['value'].length == 0){$('#currentText').html("");$('#currentText2').html("");};
         }
       }
+    //  console.log("ui", ui)
+       self.ui = ui.value;
 
     }
 
+    function getAvailableSeat(){
+      return new Promise( function (resolve, reject) {
+        $.ajax({
+          type:"GET",
+          headers : headers,
+          url: reservationUrl,
+          data: "",
+          processData: false,
+          success: function(msg) {
+            self.availableSeat = msg;
+            for(var index = 0; index < self.availableSeat.length ; index++){
+              self.availableSeat[index].color= '#267db3';
+            }
+            for(var i = 0; i < self.availableSeat.length; i ++){
+              if(self.availableSeat[i].seatNo == self.fullSeat[i].seatNo){
+                self.fullSeat[i] = self.availableSeat[i];
+              }
+            }
+            console.log("yas!");
+            resolve();
+          }
+        });
+// fulfilled
+      // } else {
+      //   console.log("sad")
+      //   reject();
+      //   //  reject(reason); // reject
+      // }
+
+    }
+  );
+    }
     self.handleActivated = function(info) {
 
-  //    console.log(self.selectedItemsValue);
+};
 
-      for(var i = 0; i < self.availableSeat.length; i ++){
-        if(self.availableSeat[i].seatNo == self.fullSeat[i].seatNo){
-          self.fullSeat[i] = self.availableSeat[i];
+/**
+* Optional ViewModel method invoked after the View is inserted into the
+* document DOM.  The application can put logic that requires the DOM being
+* attached here.
+* @param {Object} info - An object with the following key-value pairs:
+* @param {Node} info.element - DOM element or where the binding is attached. This may be a 'virtual' element (comment node).
+* @param {Function} info.valueAccessor - The binding's value accessor.
+* @param {boolean} info.fromCache - A boolean indicating whether the module was retrieved from cache.
+*/
+
+self.handleAttached = function(info) {
+  getAvailableSeat().then(
+    function(){
+
+      var count = 0;
+      var temp = [];
+      for(var i = 11; i >= 0; i--){
+        temp = [];
+        for ( var index= (self.fullTable[i].size)-1; index >= 0; index-- ){
+          self.fullTable[i].push(self.fullSeat[count]);
+
+          count++;
+        }
+        self.fullTable[i] = temp;
       }
+      console.log(  self.fullTable);
+    }, function(){
+      console.log("you failed ");
+
     }
-
-    var count = 0;
-    var temp = [];
-    for(var i = 11; i >= 0; i--){
-     temp = [];
-      for ( var index= (self.fullTable[i].size)-1; index >= 0; index-- ){
-        self.fullTable[i].push(this.fullSeat[count]);
-        console.log(this.fullSeat[count]);
-
-        count++;
-      }
-      self.fullTable[i] = temp;
-    }
-    console.log(  self.fullTable);
-    };
-
-    /**
-    * Optional ViewModel method invoked after the View is inserted into the
-    * document DOM.  The application can put logic that requires the DOM being
-    * attached here.
-    * @param {Object} info - An object with the following key-value pairs:
-    * @param {Node} info.element - DOM element or where the binding is attached. This may be a 'virtual' element (comment node).
-    * @param {Function} info.valueAccessor - The binding's value accessor.
-    * @param {boolean} info.fromCache - A boolean indicating whether the module was retrieved from cache.
-    */
+  );
+};
 
 
 
-    /**
-    * Optional ViewModel method invoked after the bindings are applied on this View.
-    * If the current View is retrieved from cache, the bindings will not be re-applied
-    * and this callback will not be invoked.
-    * @param {Object} info - An object with the following key-value pairs:
-    * @param {Node} info.element - DOM element or where the binding is attached. This may be a 'virtual' element (comment node).
-    * @param {Function} info.valueAccessor - The binding's value accessor.
-    */
-    self.handleBindingsApplied = function(info) {
 
-       };
+/**
+* Optional ViewModel method invoked after the bindings are applied on this View.
+* If the current View is retrieved from cache, the bindings will not be re-applied
+* and this callback will not be invoked.
+* @param {Object} info - An object with the following key-value pairs:
+* @param {Node} info.element - DOM element or where the binding is attached. This may be a 'virtual' element (comment node).
+* @param {Function} info.valueAccessor - The binding's value accessor.
+*/
+self.handleBindingsApplied = function(info) {
 
-    /*
-    * Optional ViewModel method invoked after the View is removed from the
-    * document DOM.
-    * @param {Object} info - An object with the following key-value pairs:
-    * @param {Node} info.element - DOM element or where the binding is attached. This may be a 'virtual' element (comment node).
-    * @param {Function} info.valueAccessor - The binding's value accessor.
-    * @param {Array} info.cachedNodes - An Array containing cached nodes for the View if the cache is enabled.
-    */
-    self.handleDetached = function(info) {
-      // Implement if needed
-    };
-  }
+};
 
-  /*
-  * Returns a constructor for the ViewModel so that the ViewModel is constrcuted
-  * each time the view is displayed.  Return an instance of the ViewModel if
-  * only one instance of the ViewModel is needed.
-  */
-  return new DashboardViewModel();
+/*
+* Optional ViewModel method invoked after the View is removed from the
+* document DOM.
+* @param {Object} info - An object with the following key-value pairs:
+* @param {Node} info.element - DOM element or where the binding is attached. This may be a 'virtual' element (comment node).
+* @param {Function} info.valueAccessor - The binding's value accessor.
+* @param {Array} info.cachedNodes - An Array containing cached nodes for the View if the cache is enabled.
+*/
+self.handleDetached = function(info) {
+  // Implement if needed
+};
+}
+
+/*
+* Returns a constructor for the ViewModel so that the ViewModel is constrcuted
+* each time the view is displayed.  Return an instance of the ViewModel if
+* only one instance of the ViewModel is needed.
+*/
+return new DashboardViewModel();
 }
 );

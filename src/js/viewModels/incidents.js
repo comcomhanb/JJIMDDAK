@@ -84,7 +84,7 @@ function(oj, ko, $, app) {
       //     console.log("adfaf");
       // }
     });
-    self.allItems =
+    //self.allItems =
     console.log();
 
   };
