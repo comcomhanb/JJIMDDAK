@@ -5,14 +5,17 @@
 /*
 * Your dashboard ViewModel code goes here
 */
-define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojdatetimepicker', 'ojs/ojpictochart', 'ojs/ojlegend'],
-function(oj, ko, $) {
+define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', 'ojs/ojdatetimepicker', 'ojs/ojpictochart', 'ojs/ojlegend'],
+function(oj, ko, $, app) {
 
   function DashboardViewModel() {
     var self = this;
+    self.app = app;
+  //  self.username = app.username;
 
+    //this.username = about.currentValue;
     //calender value
-    this.value = ko.observable(oj.IntlConverterUtils.dateToLocalIso(new Date(2017, 9, 5)));
+    this.value = ko.observable(oj.IntlConverterUtils.dateToLocalIso(new Date()));
     self.selectionValue = ko.observable('single');
     self.selectedItemsValue = ko.observableArray([]);
     self.legendSections = ko.observableArray([{items: [
@@ -25,22 +28,76 @@ function(oj, ko, $) {
         self.clickedButton(event.currentTarget.id);
         return true;
     }
-    var table1_1 =[];
-    var table1_2 =[];
 
-    var table2_1 =[];
-    var table2_2 =[];
+    var fullTable=[
+      {seatNo: "12042", location: "12F South", id: 1},
+      {seatNo: "12044", location: "12F South", id: 2},
+      {seatNo: "12046", location: "12F South", id: 3},
+      {seatNo: "12048", location: "12F South", id: 4},
+      {seatNo: "12050", location: "12F South", id: 5},
+      {seatNo: "12341", location: "12F South", id: 6},
+      {seatNo: "12343", location: "12F South", id: 7},
+      {seatNo: "12345", location: "12F South", id: 8},
+      {seatNo: "12347", location: "12F South", id: 9},
+      {seatNo: "12349", location: "12F South", id: 10},
+      {seatNo: "12351", location: "12F South", id: 11},
+      {seatNo: "12353", location: "12F South", id: 12},
+      {seatNo: "12355", location: "12F South", id: 13},
+      {seatNo: "12357", location: "12F South", id: 14},
+      {seatNo: "12359", location: "12F South", id: 15},
+      {seatNo: "12361", location: "12F South", id: 16},
+      {seatNo: "12363", location: "12F South", id: 17},
+      {seatNo: "12367", location: "12F South", id: 18},
+      {seatNo: "12369", location: "12F South", id: 19},
+      {seatNo: "12371", location: "12F South", id: 20},
+      {seatNo: "12373", location: "12F South", id: 21},
+      {seatNo: "12375", location: "12F South", id: 22},
+      {seatNo: "12377", location: "12F South", id: 23},
+      {seatNo: "12379", location: "12F South", id: 24},
+      {seatNo: "12381", location: "12F South", id: 25},
+      {seatNo: "12383", location: "12F South", id: 26},
+      {seatNo: "12385", location: "12F South", id: 27},
+      {seatNo: "12387", location: "12F South", id: 28},
+      {seatNo: "12389", location: "12F South", id: 29},
+      {seatNo: "12391", location: "12F South", id: 30},
+      {seatNo: "12393", location: "12F South", id: 31},
+      {seatNo: "12395", location: "12F South", id: 32},
+      {seatNo: "12397", location: "12F South", id: 33},
+      {seatNo: "12399", location: "12F South", id: 34},
+      {seatNo: "12401", location: "12F South", id: 35},
+      {seatNo: "12403", location: "12F South", id: 36},
+      {seatNo: "12405", location: "12F South", id: 37},
+      {seatNo: "12407", location: "12F South", id: 38},
+      {seatNo: "12409", location: "12F South", id: 39},
+      {seatNo: "12411", location: "12F South", id: 40},
+      {seatNo: "12413", location: "12F South", id: 41},
+      {seatNo: "12415", location: "12F South", id: 42},
+      {seatNo: "12417", location: "12F South", id: 43},
+      {seatNo: "12419", location: "12F South", id: 44},
+      {seatNo: "12421", location: "12F South", id: 45},
+      {seatNo: "12427", location: "12F South", id: 46},
+      {seatNo: "12429", location: "12F South", id: 47},
+      {seatNo: "12431", location: "12F South", id: 48},
+      {seatNo: "12433", location: "12F South", id: 49},
+      {seatNo: "12437", location: "12F South", id: 50},
+      {seatNo: "12439", location: "12F South", id: 51},
+      {seatNo: "12441", location: "12F South", id: 52},
+      {seatNo: "12443", location: "12F South", id: 53},
+      {seatNo: "12445", location: "12F South", id: 54},
+      {seatNo: "12447", location: "12F South", id: 55},
+      {seatNo: "12449", location: "12F South", id: 56},
+      {seatNo: "12451", location: "12F South", id: 57},
+      {seatNo: "12463", location: "12F South", id: 58},
+      {seatNo: "12465", location: "12F South", id: 59},
+      {seatNo: "12467", location: "12F South", id: 60},
+      {seatNo: "12469", location: "12F South", id: 61},
+      {seatNo: "12471", location: "12F South", id: 62},
+      {seatNo: "12473", location: "12F South", id: 63},
+      {seatNo: "12475", location: "12F South", id: 64}
+    ]
+    var table1_1 = table1_2 =table2_1 = table2_2 = table3_1 = table3_2 = table3_3 = table4_1= table4_2 = table4_3 = table5_1= table5_2= [];
+    table1_1.size  = table1_2.size = table2_1.size = table2_2.size = 8;
 
-    var table3_1 =[];
-    var table3_2 =[];
-    var table3_3 =[];
-
-    var table4_1 =[];
-    var table4_2 =[];
-    var table4_3 =[];
-
-    var table5_1 =[];
-    var table5_2 =[];
 
     for ( var index=0; index<8; index++ ) {
       table1_1.push( {name: 'table1_1-'+index , color: '#267db3'} );
@@ -50,11 +107,10 @@ function(oj, ko, $) {
       table3_1.push( {name: 'table3_1-'+index, color: '#267db3' });
       table3_2.push( {name: 'table3_2-'+index, color: '#267db3' });
 
-
     }
     for ( var index=0; index<4; index++ ) {
       table3_3.push( {name: 'table3_3-'+index, color: '#267db3'} );
-      table5_2.push( {name: 'table3_3-'+index, color: '#267db3'} );
+      table5_2.push( {name: 'table5_2-'+index, color: '#267db3'} );
 
     }
     for ( var index=0; index<6; index++ ) {

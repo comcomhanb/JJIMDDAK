@@ -5,14 +5,49 @@
 /*
  * Your about ViewModel code goes here
  */
-define(['ojs/ojcore', 'knockout', 'jquery'],
- function(oj, ko, $) {
-  
+define(['ojs/ojcore', 'knockout', 'jquery','appController', 'ojs/ojknockout', 'ojs/ojinputtext',  'ojs/ojbutton'],
+ function(oj, ko, $, app) {
+
     function AboutViewModel() {
       var self = this;
       // Below are a subset of the ViewModel methods invoked by the ojModule binding
       // Please reference the ojModule jsDoc for additionaly available methods.
+      self.app = app;
+      self.currentValue = ko.observable(self.app.userLogin());
+      self.buttonDisabled = ko.observable(true);
 
+      self.submitInput = function()
+      {
+      //  console.log("asdf", this.currentRawValue);
+        if (self.currentValue() == "sung.hye.jeon@oracle.com"){
+          alert("본인의 오라클 계정으로 등록 해 주세요.");
+        }
+        else{
+          alert("성공적으로 등록되었습니다.");
+          self.app.userLogin (self.currentValue());
+          console.log("user name", self.app.userLogin());
+        }
+      }
+
+      // callback when an option changes. Check is that the option changed is 'rawValue' and
+      // if 'rawValue' is not empty, enable the 'Submit' button, else disable it.
+      self.optionChangeCallback = function(event, data)
+      {
+        var rawValue, elem;
+        if (data['option'] === "rawValue")
+        {
+          elem = $("#text-input");
+          rawValue = elem.ojInputText("option", "rawValue");
+          if (rawValue)
+          {
+            self.buttonDisabled(false);
+          }
+          else
+          {
+            self.buttonDisabled(true);
+          }
+        }
+      }
       /**
        * Optional ViewModel method invoked when this ViewModel is about to be
        * used for the View transition.  The application can put data fetch logic
@@ -38,12 +73,12 @@ define(['ojs/ojcore', 'knockout', 'jquery'],
        * @param {boolean} info.fromCache - A boolean indicating whether the module was retrieved from cache.
        */
       self.handleAttached = function(info) {
-        // Implement if needed
+        this.value = ko.observable("Green");
       };
 
 
       /**
-       * Optional ViewModel method invoked after the bindings are applied on this View. 
+       * Optional ViewModel method invoked after the bindings are applied on this View.
        * If the current View is retrieved from cache, the bindings will not be re-applied
        * and this callback will not be invoked.
        * @param {Object} info - An object with the following key-value pairs:

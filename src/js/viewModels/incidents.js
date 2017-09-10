@@ -13,7 +13,13 @@ define(['ojs/ojcore', 'knockout', 'jquery',
       var self = this;
       // Below are a subset of the ViewModel methods invoked by the ojModule binding
       // Please reference the ojModule jsDoc for additionaly available methods.
+      var baseUrl = "https://msrapi-gse00013250.apaas.us6.oraclecloud.com/v1/";
+      var reservationUrl = baseUrl+ "reservations/findAvailableSeats?startingTime=2017-09-07T00:01:42&endingTime=2017-09-07T00:01:42";
 
+      var headers = {
+        'Content-Type' : 'application/json',
+        'Accept' : 'application/json'
+      }
       /**
        * Optional ViewModel method invoked when self ViewModel is about to be
        * used for the View transition.  The application can put data fetch logic
@@ -60,6 +66,20 @@ self.handleReady = function()
             self.handleDefaultAction(item);
         });
     });
+    $.ajax({
+  type:"GET",
+  headers : headers,
+  url: reservationUrl,
+  data: "",
+  processData: false,
+  success: function(msg) {
+//    $("#results").append("The result =" + StringifyPretty(msg));
+console.log("msg ", msg);
+  }
+  // error: function(msg) {
+  //     console.log("adfaf");
+  // }
+});
 };
 
 self.handleDestroy = function()

@@ -35,7 +35,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojknockout', 'ojs/ojarray
       // {name: '예약취소', id: 'customers',
       //  iconClass: 'oj-navigationlist-item-icon demo-icon-font-24 demo-garbage-icon-24'},
       {name: 'Chat', id: 'about',
-      iconClass: 'oj-navigationlist-item-icon demo-icon-font-24 demo-chat-icon-24'}
+      iconClass: 'oj-navigationlist-item-icon demo-icon-font-24 demo-person-icon-24'}
       ];
       self.navDataSource = new oj.ArrayTableDataSource(navData, {idAttribute: 'id'});
       //
@@ -45,7 +45,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojknockout', 'ojs/ojarray
       self.appName = ko.observable("찜!딱!");
       // User Info used in Global Navigation area
       self.userLogin = ko.observable("sung.hye.jeon@oracle.com");
-
+      
       // Footer
       function footerLink(name, id, linkTarget) {
         this.name = name;
