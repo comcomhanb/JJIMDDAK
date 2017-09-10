@@ -11,7 +11,27 @@ function(oj, ko, $, app) {
   function DashboardViewModel() {
     var self = this;
     self.app = app;
-  //  self.username = app.username;
+    //  self.username = app.username;
+    var baseUrl = "https://msrapi-gse00013250.apaas.us6.oraclecloud.com/v1/";
+    //  var reservationUrl = baseUrl+ "reservations/findAvailableSeats?startingTime=2017-09-07T00:01:42&endingTime=2017-09-07T00:01:42";
+
+    var d = new Date();
+    var startingTime =
+    d.getFullYear() + "-" +
+    ("00" + (d.getMonth() + 1)).slice(-2) + "-" +
+    ("00" + d.getDate()).slice(-2) +   "T09:00:00"
+
+    var endingTime =
+    d.getFullYear() + "-" +
+    ("00" + (d.getMonth() + 1)).slice(-2) + "-" +
+    ("00" + d.getDate()).slice(-2) + "T18:01:42"
+
+    var headers = {
+      'Content-Type' : 'application/json',
+      'Accept' : 'application/json'
+    }
+    var reservationUrl = baseUrl+ "reservations/findAvailableSeats?startingTime="+ startingTime +"&endingTime=" + endingTime;
+
 
     //this.username = about.currentValue;
     //calender value
@@ -25,11 +45,26 @@ function(oj, ko, $, app) {
     ]}]);
     self.clickedButton = ko.observable("(None clicked yet)");
     self.buttonClick = function(data, event){
-        self.clickedButton(event.currentTarget.id);
-        return true;
-    }
+      self.clickedButton(event.currentTarget.id);
+      console.log("sfd");
 
-    var fullTable=[
+      return true;
+    }
+    self.table1_1 = [];
+    self.table1_2 = [];
+    self.table2_1 = [];
+    self.table2_2 = [];
+    self.table3_1 = [];
+    self.table3_2 = [];
+    self.table3_3 = [];
+    self.table4_1 = [];
+    self.table4_2 = [];
+    self.table4_3 = [];
+    self.table5_1 = [];
+    self.table5_2 = [];
+    self.fullTable= [self.table1_1 , self.table1_2, self.table2_1, self.table2_2, self.table3_1, self.table3_2, self.table3_3 ,self.table4_1, self.table4_2, self.table4_3,  self.table5_2, self.table5_1];
+
+    self.fullSeat=[
       {seatNo: "12042", location: "12F South", id: 1},
       {seatNo: "12044", location: "12F South", id: 2},
       {seatNo: "12046", location: "12F South", id: 3},
@@ -93,65 +128,61 @@ function(oj, ko, $, app) {
       {seatNo: "12469", location: "12F South", id: 61},
       {seatNo: "12471", location: "12F South", id: 62},
       {seatNo: "12473", location: "12F South", id: 63},
-      {seatNo: "12475", location: "12F South", id: 64}
+      {seatNo: "12475", location: "12F South", id: 64},
+
+      {seatNo: "12476", location: "12F South", id: 65},
+      {seatNo: "12477", location: "12F South", id: 66},
+
+      {seatNo: "12478", location: "12F South", id: 67},
+      {seatNo: "12479", location: "12F South", id: 68},
+      {seatNo: "12480", location: "12F South", id: 69},
+
+      {seatNo: "12481", location: "12F South", id: "A-4"},
+      {seatNo: "12482", location: "12F South", id: "A-3"},
+      {seatNo: "12483", location: "12F South", id: "A-2"},
+      {seatNo: "12484", location: "12F South", id: "A-1"},
     ]
-    var table1_1 = table1_2 =table2_1 = table2_2 = table3_1 = table3_2 = table3_3 = table4_1= table4_2 = table4_3 = table5_1= table5_2= [];
-    table1_1.size  = table1_2.size = table2_1.size = table2_2.size = 8;
 
+    self.table1_1.size  = self.table1_2.size = self.table2_1.size = self.table2_2.size = self.table3_1.size = self.table3_2.size = 8;
+    self.table3_3.size = self.table5_2.size = 4;
+    self.table4_1.size = self.table4_2.size = 6;
+    self.table4_3.size = 2;
+    self.table5_1.size = 3;
 
-    for ( var index=0; index<8; index++ ) {
-      table1_1.push( {name: 'table1_1-'+index , color: '#267db3'} );
-      table1_2.push( {name: 'table1_2-'+index, color: '#267db3'} );
-      table2_1.push( {name: 'table2_1-'+index, color: '#267db3'} );
-      table2_2.push( {name: 'table2_2-'+index, color: '#267db3' });
-      table3_1.push( {name: 'table3_1-'+index, color: '#267db3' });
-      table3_2.push( {name: 'table3_2-'+index, color: '#267db3' });
+    $.ajax({
+     type:"GET",
+     headers : headers,
+     url: reservationUrl,
+     data: "",
+     processData: false,
+     success: function(msg) {
+       self.availableSeat = msg;
+         for(var index = 0; index < self.availableSeat.length ; index++){
+            self.availableSeat[index].color= '#267db3';
+          }
+     }
+   });
 
-    }
-    for ( var index=0; index<4; index++ ) {
-      table3_3.push( {name: 'table3_3-'+index, color: '#267db3'} );
-      table5_2.push( {name: 'table5_2-'+index, color: '#267db3'} );
+    self.pictoChartItems1_1 = ko.observableArray(self.table1_1);
+    self.pictoChartItems1_2 = ko.observableArray(self.table1_2);
 
-    }
-    for ( var index=0; index<6; index++ ) {
-      table4_1.push( {name: 'table4_1-'+index, color: '#267db3' });
-      table4_2.push( {name: 'table4_2-'+index, color: '#267db3' });
+    self.pictoChartItems2_1 = ko.observableArray(self.table2_1);
+    self.pictoChartItems2_2 = ko.observableArray(self.table2_2);
 
-    }
-    for ( var index=0; index<2; index++ ) {
-      table4_3.push( {name: 'table4_3-'+index, color: '#267db3'} );
+    self.pictoChartItems3_1 = ko.observableArray(self.table3_1);
+    self.pictoChartItems3_2 = ko.observableArray(self.table3_2);
+    self.pictoChartItems3_3 = ko.observableArray(self.table3_3);
 
-    }
-    for ( var index=0; index<3; index++ ) {
-      table5_1.push( {name: 'table5_1-'+index, color: '#267db3' });
-    }
+    self.pictoChartItems4_1 = ko.observableArray(self.table4_1);
+    self.pictoChartItems4_2 = ko.observableArray(self.table4_2);
+    self.pictoChartItems4_3 = ko.observableArray(self.table4_3);
 
-    self.pictoChartItems1_1 = ko.observableArray(table1_1);
-    self.pictoChartItems1_2 = ko.observableArray(table1_2);
-
-    self.pictoChartItems2_1 = ko.observableArray(table2_1);
-    self.pictoChartItems2_2 = ko.observableArray(table2_2);
-
-    self.pictoChartItems3_1 = ko.observableArray(table3_1);
-    self.pictoChartItems3_2 = ko.observableArray(table3_2);
-    self.pictoChartItems3_3 = ko.observableArray(table3_3);
-
-    self.pictoChartItems4_1 = ko.observableArray(table4_1);
-    self.pictoChartItems4_2 = ko.observableArray(table4_2);
-    self.pictoChartItems4_3 = ko.observableArray(table4_3);
-
-    self.pictoChartItems5_1 = ko.observableArray(table5_1);
-    self.pictoChartItems5_2 = ko.observableArray(table5_2);
-
-    var selected = ['iPad'];
-    self.selectedItemsValue(selected);
-    $('#currentText').html("selected items: <br/>");
-    $('#currentText2').html(selected);
-
+    self.pictoChartItems5_1 = ko.observableArray(self.table5_1);
+    self.pictoChartItems5_2 = ko.observableArray(self.table5_2);
 
     self.picto1Listener = function(event, ui) {
       if (ui['option'] == 'selection') {
-        $('#currentText').html("selected items: <br/>");
+        $('#currentText').html("선택한 좌석: <br/>");
         var items = "";
         if(ui['value']){
           for(var i = 0; i < ui['value'].length; i++){
@@ -162,9 +193,32 @@ function(oj, ko, $, app) {
           if (ui['value'].length == 0){$('#currentText').html("");$('#currentText2').html("");};
         }
       }
+
     }
 
     self.handleActivated = function(info) {
+
+  //    console.log(self.selectedItemsValue);
+
+      for(var i = 0; i < self.availableSeat.length; i ++){
+        if(self.availableSeat[i].seatNo == self.fullSeat[i].seatNo){
+          self.fullSeat[i] = self.availableSeat[i];
+      }
+    }
+
+    var count = 0;
+    var temp = [];
+    for(var i = 11; i >= 0; i--){
+     temp = [];
+      for ( var index= (self.fullTable[i].size)-1; index >= 0; index-- ){
+        self.fullTable[i].push(this.fullSeat[count]);
+        console.log(this.fullSeat[count]);
+
+        count++;
+      }
+      self.fullTable[i] = temp;
+    }
+    console.log(  self.fullTable);
     };
 
     /**
@@ -176,9 +230,7 @@ function(oj, ko, $, app) {
     * @param {Function} info.valueAccessor - The binding's value accessor.
     * @param {boolean} info.fromCache - A boolean indicating whether the module was retrieved from cache.
     */
-    self.handleAttached = function(info) {
-      // Implement if needed
-    };
+
 
 
     /**
@@ -190,8 +242,8 @@ function(oj, ko, $, app) {
     * @param {Function} info.valueAccessor - The binding's value accessor.
     */
     self.handleBindingsApplied = function(info) {
-      // Implement if needed
-    };
+
+       };
 
     /*
     * Optional ViewModel method invoked after the View is removed from the

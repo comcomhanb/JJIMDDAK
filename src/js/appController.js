@@ -23,6 +23,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojknockout', 'ojs/ojarray
         //  'customers': {label: '예약취소'},
          'about': {label: 'Chat'}
        });
+
       oj.Router.defaults['urlAdapter'] = new oj.Router.urlParamAdapter();
 
       // Navigation setup
@@ -46,6 +47,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojknockout', 'ojs/ojarray
       // User Info used in Global Navigation area
       self.userLogin = ko.observable("sung.hye.jeon@oracle.com");
       
+  //    self.router.go('dashboard');
+
       // Footer
       function footerLink(name, id, linkTarget) {
         this.name = name;
