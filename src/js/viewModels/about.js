@@ -26,6 +26,8 @@ define(['ojs/ojcore', 'knockout', 'jquery','appController', 'ojs/ojknockout', 'o
           alert("성공적으로 등록되었습니다.");
           self.app.userLogin (self.currentValue());
           console.log("user name", self.app.userLogin());
+          console.log("user name", self.currentValue());
+
         }
       }
 

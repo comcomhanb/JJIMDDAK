@@ -70,22 +70,7 @@ function(oj, ko, $, app) {
         self.handleDefaultAction(item);
       });
     });
-    $.ajax({
-      type:"GET",
-      headers : headers,
-      url: reservationUrl,
-      data: "",
-      processData: false,
-      success: function(msg) {
-        //    $("#results").append("The result =" + StringifyPretty(msg));
-        console.log("msg ", msg);
-      }
-      // error: function(msg) {
-      //     console.log("adfaf");
-      // }
-    });
-    //self.allItems =
-    console.log();
+
 
   };
 
@@ -170,18 +155,18 @@ function(oj, ko, $, app) {
   self.handleTrash = function(data, event)
   {
 
-    $.ajax({
-      type:"GET",
-      headers : headers,
-      url: reservationUrl,
-      data: "",
-      processData: false,
-      success: function(msg) {
-        //    $("#results").append("The result =" + StringifyPretty(msg));
-        console.log("msg ", msg);
-      }
-
-    });
+    // $.ajax({
+    //   type:"GET",
+    //   headers : headers,
+    //   url: reservationUrl,
+    //   data: "",
+    //   processData: false,
+    //   success: function(msg) {
+    //     //    $("#results").append("The result =" + StringifyPretty(msg));
+    //     console.log("msg ", msg);
+    //   }
+    //
+    // });
     self.handleAction("second", "trash", event);
 
     //self.remove(self.currentItem);
@@ -209,6 +194,23 @@ function(oj, ko, $, app) {
     });
   };
   self.handleActivated = function(info) {
+
+    console.log(reservationUrl);
+    $.ajax({
+      type:"GET",
+      headers : headers,
+      url: reservationUrl,
+      data: "",
+      processData: false,
+      success: function(msg) {
+         console.log("msg ", msg);
+        for(var index = 0; index < msg.length; index++){
+          msg[index].endingTime = msg[index].endingTime.split('T')[0] ;
+        }
+        self.allItems(msg);
+
+      }
+    });
 
   };
 
