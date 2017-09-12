@@ -12,29 +12,26 @@ function(oj, ko, $, app) {
     var self = this;
     self.app = app;
     self.username = self.app.userLogin; //ko.observable(self.app.userLogin());
+    self.availableSeatByUser;
+
     var baseUrl = "https://msrapi-gse00013250.apaas.us6.oraclecloud.com/v1/";
-    //  var reservationUrl = baseUrl+ "reservations/findAvailableSeats?startingTime=2017-09-07T00:01:42&endingTime=2017-09-07T00:01:42";
-    var d = new Date();
-    var currentDate  =
-      d.getFullYear() + "-" +
-        ("00" + (d.getMonth() + 1)).slice(-2) + "-" +
-        ("00" + d.getDate()).slice(-2);
-    var startingTime =
-    currentDate +   "T09:00:00"
-
-    var endingTime =
-    currentDate + "T18:01:45"
-
     var headers = {
       'Content-Type' : 'application/json',
       'Accept' : 'application/json'
     }
-    var availableSeatURL = baseUrl+ "reservations/findAvailableSeats?startingTime="+ startingTime +"&endingTime=" + endingTime;
     self.availableSeat = [];
-
-
     self.ui = ko.observable('');
-    this.value = ko.observable(oj.IntlConverterUtils.dateToLocalIso(new Date()));
+    self.value = ko.observable(oj.IntlConverterUtils.dateToLocalIso(new Date()));
+
+    self.calenderDate = ko.observable(self.value());
+
+    var currentDate  = this.value().split('T')[0];
+    var startingTime = currentDate + "T09:00:00";
+    var endingTime = currentDate + "T18:01:45";
+
+    self.minDate =  ko.observable(currentDate);
+
+
     self.selectionValue = ko.observable('single');
     self.selectedItemsValue = ko.observableArray([]);
     self.legendSections = ko.observableArray([{items: [
@@ -45,13 +42,24 @@ function(oj, ko, $, app) {
     self.clickedButton = ko.observable("(None clicked yet)");
     self.buttonClick = function(data, event){
       self.clickedButton(event.currentTarget.id);
+      console.log("self.ui", self.fullSeatMap[self.ui]);
 
-      console.log(self.ui);
       var reservationUrl = baseUrl+ "reservations/";
       if(self.ui.length != 1) {
         alert("좌석을 선택하세요.")
         return;
       }
+      if (self.fullSeatMap[self.ui].color != '#267db3') {
+          alert("예약 가능 상태인 좌석을 선택 해 주세요.")
+          return;
+      }
+
+      if (self.availableSeatByUser.length ==  1) {
+          alert("선택하신 날짜에는 이미 다른 좌석에 예약을 하셨네요. 지우신 후에 다시 예약 해 주세요.")
+          return;
+
+      }
+
       var reqBody = {
         "seatNo" : self.ui[0],
         "email" :self.username(),
@@ -59,7 +67,7 @@ function(oj, ko, $, app) {
         "startingTime" : startingTime,
        "endingTime" : endingTime
       }
-      console.log("reqBody",reqBody);
+
       $.ajax({
         type:"POST",
         headers : headers,
@@ -68,23 +76,6 @@ function(oj, ko, $, app) {
         processData: false,
         success: function(msg) {
           self.myReservation = msg;
-          console.log(msg);
-
-          self.fullSeatMap[self.myReservation.seat.seatNo].color  = '#FFB6C1';
-
-          self.pictoChartItems1_1(self.table1_1);
-          self.pictoChartItems1_2(self.table1_2);
-          self.pictoChartItems2_1(self.table2_1);
-          self.pictoChartItems2_2(self.table2_2);
-          self.pictoChartItems3_1(self.table3_1);
-          self.pictoChartItems3_2(self.table3_2);
-          self.pictoChartItems3_3(self.table3_3);
-          self.pictoChartItems4_1(self.table4_1);
-          self.pictoChartItems4_2(self.table4_2);
-          self.pictoChartItems4_3(self.table4_3);
-          self.pictoChartItems5_1(self.table5_1);
-          self.pictoChartItems5_2(self.table5_2);
-
         }
 
       });
@@ -208,14 +199,10 @@ function(oj, ko, $, app) {
             seat.color = '#e2e0da';
             self.fullSeatMap[seat.seatNo] = seat;
         }
-
       }
-      // console.log("initialized",self.fullTable);
 
       //  console.log("pictoChartItems5_2");
         self.picto1Listener = function(event, ui) {
-
-
           if (ui['option'] == 'selection') {
             $('#currentText').html("선택한 좌석: <br/>");
             var items = "";
@@ -235,6 +222,29 @@ function(oj, ko, $, app) {
 
 
       self.handleActivated = function(info) {
+
+        if(app.router.getState('dashboard').value){
+            var routeState = app.router.getState('dashboard');
+            var value = routeState.value;
+            console.log("value " + value.settingTime);
+
+            self.value (value.settingTime);
+            currentDate  =value.settingTime;
+            startingTime = currentDate + "T09:00:00";
+            endingTime = currentDate + "T18:01:45";
+        }
+        self.pictoChartItems1_1 = ko.observableArray(self.table1_1);
+        self.pictoChartItems1_2 = ko.observableArray(self.table1_2);
+        self.pictoChartItems2_1 = ko.observableArray(self.table2_1);
+        self.pictoChartItems2_2 = ko.observableArray(self.table2_2);
+        self.pictoChartItems3_1 = ko.observableArray(self.table3_1);
+        self.pictoChartItems3_2 = ko.observableArray(self.table3_2);
+        self.pictoChartItems3_3 = ko.observableArray(self.table3_3);
+        self.pictoChartItems4_1 = ko.observableArray(self.table4_1);
+        self.pictoChartItems4_2 = ko.observableArray(self.table4_2);
+        self.pictoChartItems4_3 = ko.observableArray(self.table4_3);
+        self.pictoChartItems5_1 = ko.observableArray(self.table5_1);
+        self.pictoChartItems5_2 = ko.observableArray(self.table5_2);
 
       };
 
@@ -264,66 +274,8 @@ function(oj, ko, $, app) {
       * @param {Function} info.valueAccessor - The binding's value accessor.
       */
       self.handleBindingsApplied = function(info) {
-        var availableSeatByUserURL = baseUrl+ "reservations/findByUser/email:" + self.username()+  "?startingTime="+ startingTime +"&endingTime=" + endingTime;
-      //  var availableSeatURL = baseUrl+ "reservations/findAvailableSeats?startingTime="+ startingTime +"&endingTime=" + endingTime;
 
-        console.log("availableSeatByUserURL!!!", availableSeatByUserURL);
-        $.ajax({
-          type:"GET",
-          headers : headers,
-          url: availableSeatByUserURL,
-          data: "",
-          processData: false,
-          success: function(msg) {
-            self.availableSeatByUserURL = msg;
-             console.log("self.availableSeatByUserURL", self.availableSeatByUserURL);
-            //
-            // for(var i = 0; i < self.availableSeat.length; i ++){
-            //   self.fullSeatMap[self.availableSeat[i].seatNo].color  = '#267db3';
-            // }
 
-          }
-
-        });
-
-        $.ajax({
-          type:"GET",
-          headers : headers,
-          url: availableSeatURL,
-          data: "",
-          processData: false,
-          success: function(msg) {
-            self.availableSeat = msg;
-
-             console.log("availableSeatURL", availableSeatURL);
-
-            for(var i = 0; i < self.availableSeat.length; i ++){
-              // console.log("self.availableSeat",self.availableSeat);
-              // console.log("self.fullSeatMap[self.availableSeat[i].seatNo]",self.fullSeatMap[self.availableSeat[i].seatNo]);
-              self.fullSeatMap[self.availableSeat[i].seatNo].color  = '#267db3';
-            }
-
-            console.log("msg",msg);
-          //  console.log("msg",msg);
-
-            //self.fullSeatMap[self.availableSeat[i].seatNo].color  = '#267db3';
-
-            self.pictoChartItems1_1(self.table1_1);
-            self.pictoChartItems1_2(self.table1_2);
-            self.pictoChartItems2_1(self.table2_1);
-            self.pictoChartItems2_2(self.table2_2);
-            self.pictoChartItems3_1(self.table3_1);
-            self.pictoChartItems3_2(self.table3_2);
-            self.pictoChartItems3_3(self.table3_3);
-            self.pictoChartItems4_1(self.table4_1);
-            self.pictoChartItems4_2(self.table4_2);
-            self.pictoChartItems4_3(self.table4_3);
-            self.pictoChartItems5_1(self.table5_1);
-            self.pictoChartItems5_2(self.table5_2);
-
-          }
-
-        });
       };
 
       /*
@@ -337,6 +289,77 @@ function(oj, ko, $, app) {
       self.handleDetached = function(info) {
         // Implement if needed
       };
+
+      self.updateAfterDateChanged = function(event, ui){
+        var availableSeatURL = baseUrl+ "reservations/findAvailableSeats?startingTime="+ startingTime +"&endingTime=" + endingTime;
+
+        if ( ui.optionMetadata.readOnly == true) return;
+
+        for(var outerIndex = 0; outerIndex < self.fullTable.length; outerIndex++){
+          for (var index = 0 ; index < self.fullTable[outerIndex].length ; index++){
+            self.fullTable[outerIndex][index].color = '#e2e0da';
+        }
+      }
+        console.log("updateAfterDateChanged", event, ui);
+        currentDate  = self.value().split('T')[0];
+        startingTime = currentDate + "T09:00:00";
+        endingTime = currentDate + "T18:01:45";
+
+
+        var availableSeatURL = baseUrl+ "reservations/findAvailableSeats?startingTime="+ startingTime +"&endingTime=" + endingTime;
+
+        $.ajax({
+          type:"GET",
+          headers : headers,
+          url: availableSeatURL,
+          data: "",
+          processData: false,
+          success: function(msg) {
+            console.log("availableSeat", msg);
+
+            self.availableSeat = msg;
+
+            for(var i = 0; i < self.availableSeat.length; i ++){
+              self.fullSeatMap[self.availableSeat[i].seatNo].color  = '#267db3';
+            }
+
+            var availableSeatByUserURL = baseUrl+ "reservations/findByUser/" + self.username()+  "?startingTime="+ startingTime +"&endingTime=" + endingTime;
+            $.ajax({
+              type:"GET",
+              headers : headers,
+              url: availableSeatByUserURL,
+              data: "",
+              processData: false,
+              success: function(msg) {
+                console.log("availableSeatByUser", msg);
+
+                  self.availableSeatByUser = msg;
+                 if(self.availableSeatByUser.length != 0) {
+                   for (var i = 0; i < self.availableSeatByUser.length; i++){
+                      self.fullSeatMap[msg[i].seat.seatNo].color =  '#FFB6C1';
+                   }
+                 }
+                 self.pictoChartItems1_1(self.table1_1);
+                 self.pictoChartItems1_2(self.table1_2);
+                 self.pictoChartItems2_1(self.table2_1);
+                 self.pictoChartItems2_2(self.table2_2);
+                 self.pictoChartItems3_1(self.table3_1);
+                 self.pictoChartItems3_2(self.table3_2);
+                 self.pictoChartItems3_3(self.table3_3);
+                 self.pictoChartItems4_1(self.table4_1);
+                 self.pictoChartItems4_2(self.table4_2);
+                 self.pictoChartItems4_3(self.table4_3);
+                 self.pictoChartItems5_1(self.table5_1);
+                 self.pictoChartItems5_2(self.table5_2);
+            }
+            });
+
+          }
+
+        });
+
+      //  event.preventDefault();
+      }
     }
 
     /*

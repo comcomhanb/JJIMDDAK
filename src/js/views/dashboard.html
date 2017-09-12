@@ -19,7 +19,9 @@
 <label>의 "딱!"앉으실 자리를 보여드릴께요</label>
 
 
-<input id="date" data-bind="ojComponent: {component: 'ojInputDate',value: value}" style="align: left; height:15px;"/>
+<input id="date" data-bind="ojComponent:
+    {component: 'ojInputDate',value: value, optionChange : updateAfterDateChanged, min: minDate}"
+    style="align: left; height:15px;"/>
 <!--input id="inputButton" type="button"
        data-bind="click: buttonClick,
                   ojComponent: {component: 'ojButton', label: '새로운 예약 생성'}"/-->

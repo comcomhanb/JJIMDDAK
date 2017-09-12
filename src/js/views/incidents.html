@@ -4,13 +4,15 @@
  -->
 <div class="oj-hybrid-padding">
   <h3>"찜!"하신 리스트 입니다.</h3>
+
   <div id="listviewContainer">
 
-      <strong data-bind="text: action"></strong>
+      <!--strong data-bind="text: action"></strong-->
 
       <ul id="listview" aria-label="swipe to reveal on listview item" contextmenu="itemMenu"
          data-bind="ojComponent: {component: 'ojListView', data: dataSource, item: {template: 'template'}, destroy: handleDestroy, rootAttributes: {style: 'width:100%;height:300px'}}">
       </ul>
+
 
       <!--ul id="itemMenu" style="display:none" aria-label="Swipe Actions" data-bind="ojComponent: {component: 'ojMenu', select: handleMenuItemSelect, beforeOpen: handleMenuBeforeOpen}">
           <li id="read"><a href="#">Offline</a></li>
@@ -26,12 +28,12 @@
           <div class="oj-offcanvas-outer-wrapper">
             <div class="oj-offcanvas-inner-wrapper">
 
-              <div style="padding:0.1571rem">
+              <div style="padding:0.8571rem">
                   <div class="oj-flex">
-                      <strong class="oj-flex-item" data-bind="text: seat.seatNo"></strong>
-                      <span class="oj-sm-flex-initial oj-flex-item oj-text-sm oj-text-secondary-color"data-bind="text: endingTime"></span>
+                      <strong class="oj-flex-item" data-bind="text: '좌석번호 : ' +  seat.seatNo"></strong>
+                      <span class="oj-sm-flex-initial oj-flex-item oj-text-sm oj-text-secondary-color"data-bind="text: date"></span>
                   </div>
-                  <span class="oj-text-sm oj-text-primary-color" data-bind="text: seat.location"></span>
+                  <span class="oj-text-sm oj-text-primary-color" data-bind="text: '위치 : ' + seat.location"></span>
                   <!--div style="line-height: 1.5em; height: 3em; overflow: hidden; text-overflow: ellipsis" class="oj-text-sm oj-text-secondary-color" data-bind="text: content"></div-->
               </div>
 
@@ -65,4 +67,19 @@
           </div>
       </li>
   </script>
+
+  <!--div style="display:none" id="dialogWithUserDefinedHeader" title="" data-bind="ojComponent:{component: 'ojDialog', initialVisibility: 'hide', modality: 'modeless'}">
+     <div class="oj-dialog-header oj-helper-clearfix">
+        <span id="dialogTitleId" class="oj-dialog-title"> User-defined Dialog Header </span>
+     </div>
+     <div class="oj-dialog-body">
+        This dialog contains a user-defined header.
+     </div>
+     <div class="oj-dialog-footer">
+        <button id="okButton" data-bind="ojComponent: {component: 'ojButton', label: 'OK'}, click:byeJSH"> </button>
+     </div>
+  </div-->
+
+  <!--button id="buttonOpener" data-bind="ojComponent: {component: 'ojButton', label: 'Open Dialog'}, click:hiJSH"></button-->
+
 </div>

@@ -40,7 +40,7 @@ function(oj, ko) {
     ];
     self.navDataSource = new oj.ArrayTableDataSource(navData, {idAttribute: 'id'});
     //
-
+    self.showDetails =ko.observable([]);
     // Header
     // Application Name used in Branding Area
     self.appName = ko.observable("찜!딱!");
