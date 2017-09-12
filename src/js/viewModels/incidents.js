@@ -200,19 +200,6 @@ function(oj, ko, $, app) {
             return (current.id == item.prop("id"));
           });
         };
-        //
-        // self.hiJSH = function() {
-        //   console.log("hiJSH");
-        //   $("#dialogWithUserDefinedHeader").ojDialog("open");
-        //
-        // };
-        //
-        // self.byeJSH = function() {
-        //   console.log("bywJSH");
-        //   $("#dialogWithUserDefinedHeader").ojDialog("close");
-        //
-        //
-        // };
 
         self.handleActivated = function(info) {
 
@@ -278,6 +265,9 @@ function(oj, ko, $, app) {
         self.handleDetached = function(info) {
           self.handleDestroy();
         };
+
+
+
       }
 
       /*

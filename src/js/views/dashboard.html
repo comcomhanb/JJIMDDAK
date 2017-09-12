@@ -4,31 +4,39 @@
    -->
 <div class="oj-hybrid-padding">
   <div class="oj-flex oj-row">
+    <h2>안녕하세요,</h2>
+  </div>
 
-<h2>안녕하세요,</h2>
-
-                </div>
-
-
-<div class="oj-flex oj-row">
-</div>
 
     <div class="oj-flex-item">
-      <span data-bind="text: value"></span>
+      <span data-bind="text: dateForCalender"></span>
 
 <label>의 "딱!"앉으실 자리를 보여드릴께요</label>
-
-
 <input id="date" data-bind="ojComponent:
-    {component: 'ojInputDate',value: value, optionChange : updateAfterDateChanged, min: minDate}"
-    style="align: left; height:15px;"/>
+    {component: 'ojInputDate',value: dateForCalender, optionChange : updateAfterDateChanged, min: minDate}"
+    style="align: left; height:20px;"/>
+
+<div class="oj-flex oj-row">
+  <button id="inputButton" style="float:left;color:#737373;font-weight:bolder;" class="oj-button-sm"
+          data-bind="click: buttonClick,ojComponent: {
+              component:'ojButton',
+              icons: {end:'oj-fwk-icon-next oj-fwk-icon'},
+              label: '예약 생성'
+          }"></button>
+
+  <label id="currentText" style="float:left;color:#737373;font-weight:bolder;"></label>
+  <label id="currentText2" style="padding-left:8px;float:left;color:#737373;font-weight:bold;"></label>
+
+</div>
+
+
 <!--input id="inputButton" type="button"
        data-bind="click: buttonClick,
                   ojComponent: {component: 'ojButton', label: '새로운 예약 생성'}"/-->
 
 
 <div id='chart-container'>
-   <br/>
+
    <div class="oj-flex-item stat1 oj-sm-8" style="background-color:#ececec;font-weight:bold;text-align: center;">캔틴 </div>
       <div class="oj-flex oj-row">
          <div style="display:inline-block; padding-right: 3px;" class="oj-sm-4 oj-col">
@@ -40,7 +48,8 @@
                selection: selectedItemsValue,
                animationOnDataChange: 'auto',
                columnWidth: 28, rowHeight: 28,
-               optionChange: picto1Listener
+               optionChange: picto1Listener,
+               tooltip: {renderer: tooltipFunction}
                }"
                style="width:100%;">
             </div>
@@ -54,7 +63,9 @@
                selection: selectedItemsValue,
                animationOnDataChange: 'auto',
                columnWidth: 28, rowHeight: 28,
-               optionChange: picto1Listener
+               optionChange: picto1Listener,
+               tooltip: {renderer: tooltipFunction}
+
                }"
                style="width:100%;"></div>
          </div>
@@ -67,12 +78,7 @@
              }"
               style="clear:both; height:60px;" >
          </div-->
-                 <button id="inputButton"class="oj-button-sm"
-                         data-bind="click: buttonClick,ojComponent: {
-                             component:'ojButton',
-                             icons: {end:'oj-fwk-icon-next oj-fwk-icon'},
-                             label: '예약 생성'
-                         }"></button>
+
 
 
       </div>
@@ -89,7 +95,9 @@
                   selection: selectedItemsValue,
                   animationOnDataChange: 'auto',
                   columnWidth: 28, rowHeight: 28,
-                  optionChange: picto1Listener
+                  optionChange: picto1Listener,
+                  tooltip: {renderer: tooltipFunction}
+
                   }"
                   style="width:100%;">
                </div>
@@ -101,7 +109,7 @@
                   selectionMode: selectionValue,
                   selection: selectedItemsValue,
                   columnCount : 4,
-
+                  tooltip: {renderer: tooltipFunction},
                   animationOnDataChange: 'auto',
                   columnWidth: 28, rowHeight: 28,
                   optionChange: picto1Listener
@@ -120,10 +128,11 @@
                selectionMode: selectionValue,
                selection: selectedItemsValue,
                columnCount : 4,
-
                animationOnDataChange: 'auto',
                columnWidth: 28, rowHeight: 28,
-               optionChange: picto1Listener
+               optionChange: picto1Listener,
+               tooltip: {renderer: tooltipFunction}
+
                }"
                style="width:100%;">
             </div>
@@ -137,7 +146,9 @@
                columnCount : 4,
                animationOnDataChange: 'auto',
                columnWidth: 28, rowHeight: 28,
-               optionChange: picto1Listener
+               optionChange: picto1Listener,
+               tooltip: {renderer: tooltipFunction}
+
                }"
                style="width:100%;"></div>
          </div>
@@ -150,7 +161,9 @@
                columnCount : 2,
                animationOnDataChange: 'auto',
                columnWidth: 28, rowHeight: 28,
-               optionChange: picto1Listener
+               optionChange: picto1Listener,
+               tooltip: {renderer: tooltipFunction}
+
                }"
                style="width:100%;">
             </div>
@@ -169,7 +182,9 @@
               columnCount : 3,
               animationOnDataChange: 'auto',
               columnWidth: 28, rowHeight: 28,
-              optionChange: picto1Listener
+              optionChange: picto1Listener,
+              tooltip: {renderer: tooltipFunction}
+
               }"
               style="width:100%;"></div>
         </div>
@@ -183,7 +198,9 @@
                columnCount : 4,
                layoutOrigin: 'bottomStart',
                columnWidth: 28, rowHeight: 28,
-               optionChange: picto1Listener
+               optionChange: picto1Listener,
+               tooltip: {renderer: tooltipFunction}
+
                }"
                style="width:100%;"></div>
 
@@ -198,6 +215,7 @@
                animationOnDataChange: 'auto',
                columnWidth: 28, rowHeight: 28,
                layoutOrigin: 'bottomStart',
+               tooltip: {renderer: tooltipFunction},
 
                optionChange: picto1Listener
                }"
@@ -217,7 +235,9 @@
                selection: selectedItemsValue,
                animationOnDataChange: 'auto',
                columnWidth: 28, rowHeight: 28,
-               optionChange: picto1Listener
+               optionChange: picto1Listener,
+               tooltip: {renderer: tooltipFunction}
+
                }"
                style="width:80%;">
             </div>
@@ -234,7 +254,9 @@
                columnCount : 4,
                layoutOrigin: 'bottomStart',
                columnWidth: 28, rowHeight: 28,
-               optionChange: picto1Listener
+               optionChange: picto1Listener,
+               tooltip: {renderer: tooltipFunction}
+
                }"
                style="width:100%;"></div>
                <div class="oj-flex-item stat1" style="background-color:#ececec;padding-left: 1%;border-radius:3px;text-align: center;max-width:90px">심명종전무님</div>
@@ -246,9 +268,5 @@
 </div>
 <div style="height:45px;">
 </br>
-   <div style="height:inherit; max-width:120px;display: inline-block;">
-      <label id="currentText" style="float:left;color:#737373;font-weight:bolder;"></label>
-      <label id="currentText2" style="padding-left:8px;float:left;color:#737373;font-weight:bold;"></label>
-   </div>
 
 </div>
