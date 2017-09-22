@@ -16,12 +16,13 @@ function(oj, ko, $, app) {
 
     // Below are a subset of the ViewModel methods invoked by the ojModule binding
     // Please reference the ojModule jsDoc for additionaly available methods.
-    var baseUrl = "https://msrapi-gse00013250.apaas.us6.oraclecloud.com/v1/";
-    var reservationUrl = baseUrl+ "reservations/findByUser/"+ self.app.userLogin();
+    var baseUrl = "http://129.150.84.190:8080/v1/";
+    var reservationUrl = baseUrl+ "reservations/findByUser?email=" + self.app.userLogin();
 
     var headers = {
       'Content-Type' : 'application/json',
-      'Accept' : 'application/json'
+      'Accept' : 'application/json',
+      'Authorization' : 'Basic c3VuZy5oeWUuamVvbkBvcmFjbGUuY29tOndlbGNvbWUx'
     }
     //  console.log(reservationUrl);
 

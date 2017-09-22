@@ -78,10 +78,11 @@ function(oj, ko, $, app) {
         self.fullTable= [self.table1_1 , self.table1_2, self.table2_1, self.table2_2, self.table3_1, self.table3_2, self.table3_3 ,self.table4_1, self.table4_2, self.table4_3,  self.table5_1, self.table5_2];
 
     //query
-    var baseUrl = "https://msrapi-gse00013250.apaas.us6.oraclecloud.com/v1/";
+    var baseUrl = "http://129.150.84.190:8080/v1/";
     var headers = {
       'Content-Type' : 'application/json',
-      'Accept' : 'application/json'
+      'Accept' : 'application/json',
+      'Authorization' : 'Basic c3VuZy5oeWUuamVvbkBvcmFjbGUuY29tOndlbGNvbWUx'
     }
 
     // variable declaration ends
@@ -252,7 +253,6 @@ function(oj, ko, $, app) {
 
 
       self.updateAfterDateChanged = function(event, ui){
-        var availableSeatURL = baseUrl+ "reservations/findAvailableSeats?startingTime="+ startingTime +"&endingTime=" + endingTime;
       //  if ( ui.optionMetadata.readOnly == true) return;
 
         for(var outerIndex = 0; outerIndex < self.fullTable.length; outerIndex++){
@@ -260,13 +260,14 @@ function(oj, ko, $, app) {
             self.fullTable[outerIndex][index].color = '#e2e0da';
         }
       }
-    //    console.log("updateAfterDateChanged", event, ui);
+        console.log("updateAfterDateChanged", event, ui);
         currentDate  = self.dateForCalender().split('T')[0];
         startingTime = currentDate + "T09:00:00";
         endingTime = currentDate + "T18:01:45";
 
 
-        var availableSeatURL = baseUrl+ "reservations/findAvailableSeats?startingTime="+ startingTime +"&endingTime=" + endingTime;
+        var availableSeatURL = baseUrl+ "reservations/findAvailableSeats?email=" + self.username() + "&startingTime="+ startingTime +"&endingTime=" + endingTime;
+            console.log("availableSeat", availableSeatURL);
 
         $.ajax({
           type:"GET",
@@ -275,7 +276,7 @@ function(oj, ko, $, app) {
           data: "",
           processData: false,
           success: function(msg) {
-            //    console.log("availableSeat", msg);
+            console.log("availableSeat", msg);
 
             self.availableSeat = msg;
 
@@ -283,7 +284,7 @@ function(oj, ko, $, app) {
               self.fullSeatMap[self.availableSeat[i].seatNo].color  = '#267db3';
             }
 
-            var availableSeatByUserURL = baseUrl+ "reservations/findByUser/" + self.username()+  "?startingTime="+ startingTime +"&endingTime=" + endingTime;
+            var availableSeatByUserURL = baseUrl+ "reservations/findByUser?email=" +  self.username()+ "&startingTime="+ startingTime +"&endingTime=" + endingTime;
             $.ajax({
               type:"GET",
               headers : headers,
@@ -314,8 +315,10 @@ function(oj, ko, $, app) {
             }
             });
 
+          },
+          error: function(error) {
+            console.log("error", error);
           }
-
         });
 
       //  event.preventDefault();
